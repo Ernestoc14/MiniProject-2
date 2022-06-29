@@ -57,10 +57,10 @@ public class App {
     String []laboratorio = new String[5]; //Para el laboratorio
 
     //GENERALES
-    String [][] AnaquelAF = new String [2][5]; //Anaquel de A-F
+    String [][] AnaquelAF = new String [2][5]; //Anaquel de A-F 2-Lab y Med 5-Cant de Lab y Med
     String [][] AnaquelGP = new String [2][5]; //Anaquel de G-P
     String [][] AnaquelQZ = new String [2][5]; //Anaquel de Q-Z     
-    String [][] MedInfo = new String [5][7]; //Almacenamos la Info del Med como nombres, lab, fechas, Codigo...
+    String [][] MedInfo = new String [5][7]; //Almacenamos la Info del Med como nombres, lab, fechas, Codigo... 5-Cant de Meds 
     //Para listar la impresion segun el Caso usare arrays [][]
     // String [][] Case69 = new String [10][4]; //10 Medicamentos 4 Items a listar
     // String [][] Case78 = new String [10][5]; //10 Medicamentos 5 Items a listar
@@ -92,7 +92,7 @@ public class App {
                 pr.MedVencenProxMes();  //Impresion igual a Case 7 
                 break;
             case 9: //Consultar los medicamentos almacenados en un anaquel X
-                pr.MedEnAnaquelX();  //Impresion igual a Case 6
+                pr.MedEnAnaquelX(AnaquelAF, AnaquelGP, AnaquelQZ, MedInfo);  //Impresion igual a Case 6
                 break;
             case 10: //Salir
                 break;
@@ -244,13 +244,42 @@ public class App {
         }        
     }
     public void MedVencenMesYearX() //OPCION 7
-    {   
+    {   //Consultar los med que vencen en mes y anio X
     }
     public void MedVencenProxMes() //OPCION 8
-    {
+    {   //Consultar los med que vencen en los proximos N Meses
+        
     }
-    public void MedEnAnaquelX() //OPCION 9
-    {
+    public void MedEnAnaquelX(String [][] AnaquelAF, String [][] AnaquelGP, String [][] AnaquelQZ, String [][] MedInfo) //OPCION 9
+    {   //Consultar las Med en un anaquel X
+        int AnaqConsulta=0;
+        System.out.printf("Deme el Anaquel a consultar: ");
+        AnaqConsulta = sn.nextInt();  //Cantidad
+        if (AnaqConsulta == 1)
+        {   System.out.printf("\nLos medicamentos del Anaquel 1 [A-F] son: ");
+            for(int fa=0;fa<=5;fa++)
+            {   System.out.printf("El medicamento %d del Anaquel %d: " ,fa ,AnaqConsulta );
+                System.out.printf("\nNombre Comercial: %s \nNombre Generico: %s \nLaboratorio: %s \nExistencia: %s  ",MedInfo[fa][0],MedInfo[fa][1],MedInfo[fa][3],MedInfo[fa][2]);
+            } //Fin For 1
+        }//Fin If 1
+        else
+        {   if( AnaqConsulta == 2)
+            {   System.out.printf("\nLos medicamentos del Anaquel 2 [G-P] son: ");
+                for(int fa=0;fa<=5;fa++)
+                {   System.out.printf("El medicamento %d del Anaquel %d: " ,fa ,AnaqConsulta );
+                    System.out.printf("\nNombre Comercial: %s \nNombre Generico: %s \nLaboratorio: %s \nExistencia: %s  ",MedInfo[fa][0],MedInfo[fa][1],MedInfo[fa][3],MedInfo[fa][2]);
+                } //Fin For 2
+            } // Fin If 2
+            else
+            {   if( AnaqConsulta == 3)
+                {   System.out.printf("\nLos medicamentos del Anaquel 3 [Q-Z] son: ");
+                    for(int fa=0;fa<=5;fa++)
+                    {   System.out.printf("El medicamento %d del Anaquel %d: " ,fa ,AnaqConsulta );
+                        System.out.printf("\nNombre Comercial: %s \nNombre Generico: %s \nLaboratorio: %s \nExistencia: %s  ",MedInfo[fa][0],MedInfo[fa][1],MedInfo[fa][3],MedInfo[fa][2]);
+                    } //Fin For 3
+                } // Fin If 3
+            }// Fin Else 2
+        }//Fin else 1
     }
     public static void main(String[] args) {
         Scanner sn = new Scanner(System.in);
