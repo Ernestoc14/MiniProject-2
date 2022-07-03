@@ -27,7 +27,6 @@
 // 9-Consultar los medicamentos almacenados en un anaquel X(Listar nombre
 // comercial, nombre genérico, laboratorio y existencia)
 
-
 import java.util.Scanner;
 public class App {
     //SEXO 
@@ -86,10 +85,10 @@ public class App {
                 pr.MedConCantMenor(MedInfo); //Impresion igual a Case 9
                 break;
             case 7: //Consultar medicamentos que vencen en un mes X y año X
-                pr.MedVencenMesYearX(); //Impresion igual a Case 8
+                pr.MedVencenMesYearX(MedInfo); //Impresion igual a Case 8
                 break;
             case 8: //Consultar los medicamentos que vencen en los próximos N meses
-                pr.MedVencenProxMes();  //Impresion igual a Case 7 
+                pr.MedVencenProxMes(MedInfo);  //Impresion igual a Case 7 
                 break;
             case 9: //Consultar los medicamentos almacenados en un anaquel X
                 pr.MedEnAnaquelX(AnaquelAF, AnaquelGP, AnaquelQZ, MedInfo);  //Impresion igual a Case 6
@@ -188,7 +187,7 @@ public class App {
                         System.out.printf("El medicamento %s se agrego al Anaquel 3", MedInfo[wi][0]);
                     }
                     else
-                    {   System.out.println("Error");
+                    {   System.out.println("Error, el medicamento no se agrego a ningun Anaquel");
                     }
                 }
             }
@@ -217,37 +216,63 @@ public class App {
     }
     public void LabConMedXUsingNombreGen(String [][] MedInfo) //OPCION 5
     {   String medconsul;
-        int opc=1, wi=0;
+        int opc=1; //,wi=0;
         while(opc==1)
         {   System.out.printf("Deme el nombre generico del medicamento a consultar: ");
             medconsul = sn.nextLine();  //Nomb Generico
+            int wi=0; //Debuggear
             if( medconsul.equals(MedInfo[wi][1]) )
-            {   System.out.printf("El Laboratorio %s provee el medicamento %s",MedInfo[wi][3],medconsul);
+            {   System.out.printf("El Laboratorio %s provee el medicamento %s",MedInfo[wi][3],medconsul); //Nombre Generico
+            }
+            else
+            {   System.out.printf("Ningun laboratorio provee el medicamento %s",medconsul);
             }
             wi++;
-            System.out.println("Desea consultar otro medicamento? 1-Si 2-No: ");
+            System.out.print("\nDesea consultar otro medicamento? 1-Si 2-No: ");
             opc = sn.nextInt();
             sn.nextLine();
         }
     }
-    public void MedConCantMenor(String [][] MedInfo) //OPCION 6
+    public void MedConCantMenor(String [][] MedInfo) //OPCION 6 //Debuggear
     {   //String cantidad;
         int fi=0,cantidad=0,existencia=0;
         System.out.printf("Deme la cantidad del medicamento a consultar: ");
         cantidad = sn.nextInt();  //Cantidad
         for(fi=0;fi<=5;fi++)
-        {   existencia = Integer. parseInt(MedInfo[fi][2]);
+        {   existencia = Integer.parseInt(MedInfo[fi][2]);
             if( existencia < cantidad )
-            {   System.out.printf("Medicamento con cantidad debajo de %d", cantidad);
+            {   System.out.printf("\nMedicamento con cantidad debajo de %d", cantidad);
                 System.out.printf("\nNombre Comercial: %s \nNombre Generico: %s \nLaboratorio: %s \nExistencia: %s  ",MedInfo[fi][0],MedInfo[fi][1],MedInfo[fi][3],MedInfo[fi][2]);
             }
         }        
     }
-    public void MedVencenMesYearX() //OPCION 7
+    public void MedVencenMesYearX(String [][] MedInfo) //OPCION 7
     {   //Consultar los med que vencen en mes y anio X
-    }
-    public void MedVencenProxMes() //OPCION 8
+        String MatchFecha; //= "2021/13"; // Fecha a comparar con la dada en la info del Medicamento
+        int opc=0;
+        System.out.println("Deme la fecha de caducidad a consultar: ");
+        MatchFecha = sn.nextLine();
+        //Date strDate = new SimpleDateFormat("yyyy/MM").parse(MatchFecha);
+        while(opc == 1)
+        {   //Date strDate2 = new SimpleDateFormat("yyyy/MM").parse(MedInfo[iteration][4]);
+            int fi=0;
+            if(MatchFecha.equals(MedInfo[fi][4]))
+            {   System.out.printf("Hemos encontrado un medicamento que vence en: %s",MatchFecha);
+                System.out.printf("\nNombre Comercial: %s \nNombre Generico: %s \nLaboratorio: %s \nExistencia: %s  \nFecha de Caducidad: %s",MedInfo[fi][0],MedInfo[fi][1],MedInfo[fi][3],MedInfo[fi][2],MedInfo[fi][4]);
+            }
+            else{
+                System.out.printf("No encontramos medicamentos que caduquen en: %s",MatchFecha);
+            }
+            fi++;
+            System.out.print("\nDesea consultar otra fecha de caducidad? 1-Si 2-No: ");
+            opc = sn.nextInt();
+            sn.nextLine();
+
+        }
+    }    
+    public void MedVencenProxMes(String [][] MedInfo) //OPCION 8
     {   //Consultar los med que vencen en los proximos N Meses
+        //using date for Format
         
     }
     public void MedEnAnaquelX(String [][] AnaquelAF, String [][] AnaquelGP, String [][] AnaquelQZ, String [][] MedInfo) //OPCION 9
