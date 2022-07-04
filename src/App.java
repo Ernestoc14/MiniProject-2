@@ -273,7 +273,25 @@ public class App {
     public void MedVencenProxMes(String [][] MedInfo) //OPCION 8
     {   //Consultar los med que vencen en los proximos N Meses
         //using date for Format
-        
+        String MatchFecha; 
+        int opc=0;
+        System.out.println("Deme la fecha de caducidad a consultar: ");
+        MatchFecha = sn.nextLine();
+        while(opc == 1)
+        {   int fi=0;
+            if(MatchFecha.equals(MedInfo[fi][4]))
+            {   System.out.printf("Hemos encontrado un medicamento que vence en: %s",MatchFecha);
+                System.out.printf("\nNombre Comercial: %s \nNombre Generico: %s \nLaboratorio: %s \nExistencia: %s  \nFecha de Caducidad: %s",MedInfo[fi][0],MedInfo[fi][1],MedInfo[fi][3],MedInfo[fi][2],MedInfo[fi][4]);
+            }
+            else{
+                System.out.printf("No encontramos medicamentos que caduquen en: %s",MatchFecha);
+            }
+            fi++;
+            System.out.print("\nDesea consultar otra fecha de caducidad? 1-Si 2-No: ");
+            opc = sn.nextInt();
+            sn.nextLine();
+
+        }
     }
     public void MedEnAnaquelX(String [][] AnaquelAF, String [][] AnaquelGP, String [][] AnaquelQZ, String [][] MedInfo) //OPCION 9
     {   //Consultar las Med en un anaquel X
