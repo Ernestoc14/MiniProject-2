@@ -273,24 +273,30 @@ public class App {
     public void MedVencenProxMes(String [][] MedInfo) //OPCION 8
     {   //Consultar los med que vencen en los proximos N Meses
         //using date for Format
-        String MatchFecha; 
-        int opc=0;
-        System.out.println("Deme la fecha de caducidad a consultar: ");
-        MatchFecha = sn.nextLine();
+        String mesconsul;
+        char mescad; //Primer digito del mes de la fecha de cad en la info del medicamento
+        char mescad2; //Segundo digito 
+        int opc=0, fi=0;
+        System.out.println("Deme el mes a consultar: ");
+        mesconsul = sn.nextLine();
+        // Necesito guardar el mes de cada fecha en una variable y compararla en el If
         while(opc == 1)
-        {   int fi=0;
-            if(MatchFecha.equals(MedInfo[fi][4]))
-            {   System.out.printf("Hemos encontrado un medicamento que vence en: %s",MatchFecha);
+        {   mescad = MedInfo[fi][4].charAt(0);
+            mescad2 = MedInfo[fi][4].charAt(1);
+            String dig1 = String.valueOf(mescad);
+            String dig2 = String.valueOf(mescad2);
+            String fechacomppelta = dig1+dig2;
+            if(mesconsul.equals(fechacomppelta))    //Cambiar comparacion a mayor menor con convert a int dig1-2
+            {   System.out.printf("Hemos encontrado medicamentos que vencen proximos al mes: %s",fechacomppelta);
                 System.out.printf("\nNombre Comercial: %s \nNombre Generico: %s \nLaboratorio: %s \nExistencia: %s  \nFecha de Caducidad: %s",MedInfo[fi][0],MedInfo[fi][1],MedInfo[fi][3],MedInfo[fi][2],MedInfo[fi][4]);
             }
             else{
-                System.out.printf("No encontramos medicamentos que caduquen en: %s",MatchFecha);
+                System.out.printf("No encontramos medicamentos que vencen proximos al mes: %s",fechacomppelta);
             }
             fi++;
             System.out.print("\nDesea consultar otra fecha de caducidad? 1-Si 2-No: ");
             opc = sn.nextInt();
             sn.nextLine();
-
         }
     }
     public void MedEnAnaquelX(String [][] AnaquelAF, String [][] AnaquelGP, String [][] AnaquelQZ, String [][] MedInfo) //OPCION 9
@@ -328,6 +334,9 @@ public class App {
         Scanner sn = new Scanner(System.in);
         App pr = new App();
         int y=0,opc=0;
+
+        System.out.println("Bienvenidos al Mini-Proyecto 2");
+        System.out.println("Desarrollado por: Ernesto Crespo ");
         do{ System.out.println("--------------------------------Menu Principal---------------------------------");
             System.out.println("1.Registrar Laboratorios ");
             System.out.println("2.Definir los Anaqueles ");
