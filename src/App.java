@@ -59,7 +59,7 @@ public class App {
     String [][] AnaquelAF = new String [2][5]; //Anaquel de A-F 2-Lab y Med 5-Cant de Lab y Med
     String [][] AnaquelGP = new String [2][5]; //Anaquel de G-P
     String [][] AnaquelQZ = new String [2][5]; //Anaquel de Q-Z     
-    String [][] MedInfo = new String [5][7]; //Almacenamos la Info del Med como nombres, lab, fechas, Codigo... 5-Cant de Meds 
+    String [][] MedInfo = new String [5][8]; //Almacenamos la Info del Med como nombres, lab, fechas, Codigo... 5-Cant de Meds 
     //Para listar la impresion segun el Caso usare arrays [][]
     // String [][] Case69 = new String [10][4]; //10 Medicamentos 4 Items a listar
     // String [][] Case78 = new String [10][5]; //10 Medicamentos 5 Items a listar
@@ -73,7 +73,7 @@ public class App {
                 pr.DefAnaq(AnaquelAF, AnaquelGP, AnaquelQZ, MedInfo);
                 break;
             case 3: //Registrar medicamentos en el inventario
-                pr.RegistrarMedEnInventario(AnaquelAF, AnaquelGP, AnaquelQZ, MedInfo, medicamento);
+                pr.RegistrarMedEnInventario(AnaquelAF, AnaquelGP, AnaquelQZ, MedInfo, medicamento, laboratorio);
                 break;
             case 4: //Consultar medicamentos de un Laboratorio X 
                 pr.MedEnLabX(MedInfo);  //Impresion Unica
@@ -108,7 +108,7 @@ public class App {
         while(opc==1)
         {   System.out.printf("Deme el nombre del laboratorio %d: ",wi+1);
             laboratorio[wi] = sn.nextLine();
-            MedInfo[wi][3] = laboratorio[wi];
+            //MedInfo[wi][3] = laboratorio[wi];
             wi++;
             System.out.println("Desea registrar otro laboratorio? 1-Si 2-No: ");
             opc = sn.nextInt();
@@ -146,9 +146,9 @@ public class App {
         }
         //pr.setUserPeso(peso);
     }
-    public void RegistrarMedEnInventario(String [][] AnaquelAF, String [][] AnaquelGP, String [][] AnaquelQZ, String [][] MedInfo, String [] medicamento) //OPCION 3 
+    public void RegistrarMedEnInventario(String [][] AnaquelAF, String [][] AnaquelGP, String [][] AnaquelQZ, String [][] MedInfo, String [] medicamento, String [] laboratorio) //OPCION 3 
     {    //App pr = new App();
-        int opc=0,wi=0;
+        int opc=0,wi=0,fi=0;
         String lab;
         System.out.println("Desea registrar un Medicamento en el Inventario? 1-Si 2-No: ");
         opc = sn.nextInt();
@@ -161,33 +161,40 @@ public class App {
             MedInfo[wi][1] = sn.nextLine();  //Nomb Generico   1
             System.out.printf("Deme la existencia del medicamento %s:",MedInfo[wi][0]);
             MedInfo[wi][2] = sn.nextLine();  //Existencia  2
+            System.out.printf("Deme el laboratorio del medicamento %s:",MedInfo[wi][0]);
+            MedInfo[wi][3] = sn.nextLine();  //Laboratorio 3
             System.out.printf("Deme la fecha de caducidad del medicamento %s en formato MM/AAAA :",MedInfo[wi][0]);
             MedInfo[wi][4] = sn.nextLine(); //Fecha de Caducidad  4
             System.out.printf("Deme la fecha de registro del medicamento %s en formato D/MM/AA :",MedInfo[wi][0]);
             MedInfo[wi][5] = sn.nextLine(); //Fecha de Registro  5
             System.out.printf("Deme el codigo del medicamento %s: ",MedInfo[wi][0]);
             MedInfo[wi][6] = sn.nextLine();  //Codigo 6
-            lab = MedInfo[wi][3];  //Laboratorio 3
-            char firstletter = lab.charAt(0);
-            if( Character.toString(firstletter).matches("[A-F?]") )  //Anaquel 1
-            {   AnaquelAF [0][wi] = MedInfo[wi][3];  // Laboratorio
-                AnaquelAF [1][wi] = MedInfo[wi][0]; //Nombre Comercial Medicamento
-                System.out.printf("El medicamento %s se agrego al Anaquel 1", MedInfo[wi][0]);
-            }
-            else
-            {   if( Character.toString(firstletter).matches("[G-P?]") )  //Anaquel 2
-                {   AnaquelGP [0][wi] = MedInfo[wi][3];  // Laboratorio
-                    AnaquelGP [1][wi] = MedInfo[wi][0]; //Nombre Comercial Medicamento
-                    System.out.printf("El medicamento %s se agrego al Anaquel 2", MedInfo[wi][0]);
-                }
-                else
-                {   if( Character.toString(firstletter).matches("[Q-Z?]") )  //Anaquel 3
-                    {   AnaquelQZ [0][wi] = MedInfo[wi][3];  // Laboratorio
-                        AnaquelQZ [1][wi] = MedInfo[wi][0]; //Nombre Comercial Medicamento
-                        System.out.printf("El medicamento %s se agrego al Anaquel 3", MedInfo[wi][0]);
+            //Comparar los labs
+            for(fi=0;fi<=3;fi++)
+            {   if( MedInfo [wi][3].equals(laboratorio[fi]))
+                {       lab = MedInfo[wi][3];  //Laboratorio 3
+                    char firstletter = lab.charAt(0);
+                    if( Character.toString(firstletter).matches("[A-F?]") )  //Anaquel 1
+                    {   AnaquelAF [0][wi] = MedInfo[wi][3];  // Laboratorio
+                        AnaquelAF [1][wi] = MedInfo[wi][0]; //Nombre Comercial Medicamento
+                        System.out.printf("El medicamento %s se agrego al Anaquel 1", MedInfo[wi][0]);
                     }
                     else
-                    {   System.out.println("Error, el medicamento no se agrego a ningun Anaquel");
+                    {       if( Character.toString(firstletter).matches("[G-P?]") )  //Anaquel 2
+                        {   AnaquelGP [0][wi] = MedInfo[wi][3];  // Laboratorio
+                            AnaquelGP [1][wi] = MedInfo[wi][0]; //Nombre Comercial Medicamento
+                            System.out.printf("El medicamento %s se agrego al Anaquel 2", MedInfo[wi][0]);
+                        }
+                        else
+                        {   if( Character.toString(firstletter).matches("[Q-Z?]") )  //Anaquel 3
+                            {   AnaquelQZ [0][wi] = MedInfo[wi][3];  // Laboratorio
+                            AnaquelQZ [1][wi] = MedInfo[wi][0]; //Nombre Comercial Medicamento
+                                System.out.printf("El medicamento %s se agrego al Anaquel 3", MedInfo[wi][0]);
+                            }
+                            else
+                            {   System.out.println("Error, el medicamento no se agrego a ningun Anaquel");
+                            }
+                        }
                     }
                 }
             }
@@ -235,15 +242,20 @@ public class App {
     }
     public void MedConCantMenor(String [][] MedInfo) //OPCION 6 //Debuggear
     {   //String cantidad;
-        int fi=0,cantidad=0,existencia=0;
-        System.out.printf("Deme la cantidad del medicamento a consultar: ");
-        cantidad = sn.nextInt();  //Cantidad
-        for(fi=0;fi<=5;fi++)
-        {   existencia = Integer.parseInt(MedInfo[fi][2]);
+        int fi=0,cantidad=0,existencia=0,opc=1;
+        //for(fi=0;fi<=5;fi++) //While
+        while(opc==1)
+        {   System.out.printf("Deme la cantidad del medicamento a consultar: ");
+            cantidad = sn.nextInt();  //Cantidad
+            existencia = Integer.parseInt(MedInfo[fi][2]);
             if( existencia < cantidad )
             {   System.out.printf("\nMedicamento con cantidad debajo de %d", cantidad);
                 System.out.printf("\nNombre Comercial: %s \nNombre Generico: %s \nLaboratorio: %s \nExistencia: %s  ",MedInfo[fi][0],MedInfo[fi][1],MedInfo[fi][3],MedInfo[fi][2]);
             }
+            fi++;
+            System.out.print("\nDesea consultar otro medicamento? 1-Si 2-No: ");
+            opc = sn.nextInt();
+            sn.nextLine();
         }        
     }
     public void MedVencenMesYearX(String [][] MedInfo) //OPCION 7
@@ -314,7 +326,7 @@ public class App {
         else
         {   if( AnaqConsulta == 2)
             {   System.out.printf("\nLos medicamentos del Anaquel 2 [G-P] son: ");
-                for(int fa=0;fa<=5;fa++)
+                for(int fa=0;fa<=5;fa++) // Cambiarlo para que no imprima array completo 
                 {   System.out.printf("El medicamento %d del Anaquel %d: " ,fa ,AnaqConsulta );
                     System.out.printf("\nNombre Comercial: %s \nNombre Generico: %s \nLaboratorio: %s \nExistencia: %s  ",MedInfo[fa][0],MedInfo[fa][1],MedInfo[fa][3],MedInfo[fa][2]);
                 } //Fin For 2
